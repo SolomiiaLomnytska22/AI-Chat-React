@@ -1,0 +1,20 @@
+# AI Chat Application
+
+This project creates an AI chat application using React for the front-end, Node.js for the back-end, and the Gemini API for the AI chat functionalities. The application allows users to interact with an AI chatbot in real-time.
+
+## Table of Contents
+1. [Features](#features)
+2. [Prerequisites](#prerequisites)
+
+## Features
+- Real-time chat interface with AI chatbot
+- User authentication and session management
+- Integration with Gemini API for AI responses
+- Responsive design for various devices
+
+## Prerequisites
+- Node.js (v14.x or higher)
+- npm (v6.x or higher) or yarn (v1.x or higher)
+- Gemini API key
+
+
