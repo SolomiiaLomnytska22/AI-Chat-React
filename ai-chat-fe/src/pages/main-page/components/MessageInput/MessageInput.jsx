@@ -19,7 +19,7 @@ const MessageInput = () => {
 
   const handleSendMessage = () => {
     if (inputValue.trim()) {
-      console.log('Message sent:', inputValue);
+      console.log('Message sent:', inputValue.trim());
       setInputValue('');
     }
   };
