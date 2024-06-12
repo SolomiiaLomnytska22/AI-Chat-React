@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
 body{
-    background: linear-gradient(180deg, #9395d3 0%, #f87575 100%);
+    background: linear-gradient(180deg, #7677A8 0%, #C45E5F 100%);
     background-attachment: fixed;
 }
 
@@ -12,31 +14,44 @@ body{
   
   .main-page.with-side-menu {
     grid-template-areas:
-      "side-menu photo"
+      "side-menu header"
       "side-menu messages-container"
       "side-menu message-input";
   }
   
   .main-page.without-side-menu {
     grid-template-areas:
-      "photo photo"
+      "header header"
       "messages-container messages-container"
       "message-input message-input";
   }
-  
+
+  .header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 32px;
+  }
+
+  .title {
+    font-family: "Zen Dots", sans-serif;
+    margin-left: 32px;
+    color: #FBF9FF;
+  }
+
   .photo {
     grid-area: photo;
     justify-self: end;
     width: 64px; /* Adjust size as needed */
     height: 64px; /* Adjust size as needed */
-    margin: 32px;
     border-radius: 100%;
     background: url('https://media.licdn.com/dms/image/D4D03AQFsJ552n6uLcw/profile-displayphoto-shrink_800_800/0/1699371103989?e=1723680000&v=beta&t=U7rNgIpq-6jqdp6liCvdPy9ayxh4whTfC7OKkFg1xSs') no-repeat center/cover;
   }
   
   .side-menu {
     grid-area: side-menu;
-    background-color: #f0f0f0;
+    background-color: rgb(251, 249, 255, 0.5);
     width: 256px; 
   }
   
@@ -45,7 +60,22 @@ body{
     overflow-y: auto;
     margin: 32px 64px;
     border-radius: 12px;
-    background-color: #ffffff; /* Adjust color as needed */
+    background-color: rgb(251, 249, 255, 0.1);
+  }
+  
+  .messages-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  .messages-container::-webkit-scrollbar-track {
+    margin: 8px; 
+  }
+  .messages-container::-webkit-scrollbar-thumb {
+    background: #FBF9FF; 
+    border-radius: 12px; 
+  }
+  
+  .messages-container::-webkit-scrollbar-thumb:hover {
+    background: #aaacc7; 
   }
   
   .message-input {
