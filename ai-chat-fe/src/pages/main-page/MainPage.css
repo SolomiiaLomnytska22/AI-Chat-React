@@ -1,0 +1,56 @@
+body{
+    background: linear-gradient(180deg, #9395d3 0%, #f87575 100%);
+    background-attachment: fixed;
+}
+
+.main-page {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: auto 1fr;
+    height: 100vh;
+  }
+  
+  .main-page.with-side-menu {
+    grid-template-areas:
+      "side-menu photo"
+      "side-menu messages-container"
+      "side-menu message-input";
+  }
+  
+  .main-page.without-side-menu {
+    grid-template-areas:
+      "photo photo"
+      "messages-container messages-container"
+      "message-input message-input";
+  }
+  
+  .photo {
+    grid-area: photo;
+    justify-self: end;
+    width: 64px; /* Adjust size as needed */
+    height: 64px; /* Adjust size as needed */
+    margin: 32px;
+    border-radius: 100%;
+    background: url('https://media.licdn.com/dms/image/D4D03AQFsJ552n6uLcw/profile-displayphoto-shrink_800_800/0/1699371103989?e=1723680000&v=beta&t=U7rNgIpq-6jqdp6liCvdPy9ayxh4whTfC7OKkFg1xSs') no-repeat center/cover;
+  }
+  
+  .side-menu {
+    grid-area: side-menu;
+    background-color: #f0f0f0;
+    width: 256px; 
+  }
+  
+  .messages-container {
+    grid-area: messages-container;
+    overflow-y: auto;
+    margin: 32px 64px;
+    border-radius: 12px;
+    background-color: #ffffff; /* Adjust color as needed */
+  }
+  
+  .message-input {
+    grid-area: message-input;
+    margin: 64px;
+    margin-top: 32px;
+  }
+  
