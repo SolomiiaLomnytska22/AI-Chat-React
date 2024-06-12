@@ -1,0 +1,30 @@
+.message-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 32px;
+  }
+  
+  .message {
+    padding: 0 15px;
+    margin-bottom: 32px;
+    border-radius: 12px;
+    color: white;
+    max-width: 50%;
+    word-wrap: break-word;
+  }
+  
+  .message.user {
+    background-color: #f87575;
+    align-self: flex-end;
+    text-align: right;
+  }
+  
+  .message.tool {
+    background-color: #9395d3;
+    align-self: flex-start;
+    text-align: left;
+  }
+  
+
+  
