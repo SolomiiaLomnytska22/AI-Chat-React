@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './MainPage.css';
 import MessageInput from './components/MessageInput/MessageInput';
 import MessageArea from './components/MessageArea/MessageArea';
+import SideMenu from './components/SideMenu/SideMenu'
 
 const messages = [
     {
@@ -22,9 +23,17 @@ const messages = [
     }
   ];
 
+  const initialChats = ['Chat 1', 'Chat 2', 'Chat 3'];
   
 function MainPage() {
+  const [chats, setChats] = useState(initialChats);
   const [sideMenuVisible, setSideMenuVisible] = useState(true);
+
+  const addNewChat = (e) => {
+    if (e.trim()) {
+      setChats([...chats, e]);
+    }
+  };
 
   return (
     <div className={`main-page ${sideMenuVisible ? 'with-side-menu' : 'without-side-menu'}`}>
@@ -35,9 +44,11 @@ function MainPage() {
         <div className='photo'></div>
       </div>
 
-      {sideMenuVisible && <div className='side-menu'></div>}
+      {sideMenuVisible && <div className='side-menu'>
+        <SideMenu chats={chats} handleClick={addNewChat} />
+        </div>}
       <div className='messages-container'>
-        <MessageArea messages={messages}></MessageArea>
+        <MessageArea messages={messages} />
       </div>
       <div className='message-input'>
         <MessageInput />

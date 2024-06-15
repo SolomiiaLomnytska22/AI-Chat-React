@@ -53,6 +53,7 @@ body{
     grid-area: side-menu;
     background-color: rgb(251, 249, 255, 0.5);
     width: 256px; 
+    padding: 32px;
   }
   
   .messages-container {
@@ -63,19 +64,19 @@ body{
     background-color: rgb(251, 249, 255, 0.1);
   }
   
-  .messages-container::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 8px;
   }
-  .messages-container::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     margin: 8px; 
   }
-  .messages-container::-webkit-scrollbar-thumb {
+ ::-webkit-scrollbar-thumb {
     background: #FBF9FF; 
     border-radius: 12px; 
   }
   
-  .messages-container::-webkit-scrollbar-thumb:hover {
-    background: #aaacc7; 
+ ::-webkit-scrollbar-thumb:hover {
+    background: #0008072e; 
   }
   
   .message-input {
