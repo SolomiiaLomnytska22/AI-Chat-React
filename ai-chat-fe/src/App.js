@@ -1,9 +1,10 @@
+import LoginPage from "./pages/login/LoginPage";
 import MainPage from "./pages/main-page/MainPage";
 
 function App() {
   return (
     <div className="App">
-      <MainPage></MainPage>
+      <LoginPage />
     </div>
   );
 }
