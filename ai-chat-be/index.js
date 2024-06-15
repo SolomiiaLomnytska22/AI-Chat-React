@@ -9,18 +9,14 @@ const messageRoutes = require('./routes/message');
 const chatRoutes = require('./routes/chat');
 const genAPIRoutes = require('./routes/genAPI');
 
-
-mongoose.connect(mongoString);
-const database = mongoose.connection;
-
-database.on('error', (error) => {
-    console.log(error)
-})
-
-database.once('connected', () => {
-    console.log('Database Connected');
-})
 const app = express();
+const cors = require("cors");
+const corsOrigin = {
+    origin: "http://localhost:8080",
+    credentials: true,
+    optionSuccessStatus: 200,
+  };
+  app.use(cors(corsOrigin));
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -32,4 +28,15 @@ app.use('/gen', genAPIRoutes)
 
 app.listen(3001, () => {
     console.log(`Server Started at ${3001}`)
+})
+
+mongoose.connect(mongoString);
+const database = mongoose.connection;
+
+database.on('error', (error) => {
+    console.log(error)
+})
+
+database.once('connected', () => {
+    console.log('Database Connected');
 })
