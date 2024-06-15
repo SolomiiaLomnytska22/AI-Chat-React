@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import './LoginModal.css';
+import { completeLogin } from '../../../services/login';
 
 const LoginModal = () => {
-  const [username, setUsername] = useState('');
+  const [login, setlogin] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-  
-    console.log('Username:', username);
-    console.log('Password:', password);
+    try{
+        await completeLogin(login, password);
+    } catch (err){
+        console.log(err)
+    }
+    
   };
 
   return (
@@ -17,13 +21,13 @@ const LoginModal = () => {
       <h2 className="login-header">Login</h2>
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="login">login:</label>
           <input
             type="text"
-            id="username"
+            id="login"
             className="input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={login}
+            onChange={(e) => setlogin(e.target.value)}
             required
           />
         </div>
