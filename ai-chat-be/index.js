@@ -7,16 +7,21 @@ const mongoString = process.env.DATABASE_URL;
 const userRoutes = require('./routes/user');
 const messageRoutes = require('./routes/message');
 const chatRoutes = require('./routes/chat');
+const loginRoutes = require('./routes/login');
 const genAPIRoutes = require('./routes/genAPI');
+const cookieParser = require("cookie-parser");
+const verifyJWT = require('./middleware/verifyJWT')
 
 const app = express();
+app.use(cookieParser());
+app.use(verifyJWT);
 const cors = require("cors");
 const corsOrigin = {
-    origin: "http://localhost:8080",
+    origin: "http://localhost:3000",
     credentials: true,
     optionSuccessStatus: 200,
   };
-  app.use(cors(corsOrigin));
+app.use(cors(corsOrigin));
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -25,6 +30,8 @@ app.use('/user', userRoutes);
 app.use('/message', messageRoutes);
 app.use('/chat', chatRoutes);
 app.use('/gen', genAPIRoutes)
+app.use('/login', loginRoutes)
+
 
 app.listen(3001, () => {
     console.log(`Server Started at ${3001}`)
