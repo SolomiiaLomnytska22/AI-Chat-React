@@ -1,0 +1,8 @@
+.warning{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #0008072e;
+    padding: 12px 0px;
+    color: #FBF9FF;
+}
