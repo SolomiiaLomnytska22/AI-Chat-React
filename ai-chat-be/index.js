@@ -9,6 +9,7 @@ const messageRoutes = require('./routes/message');
 const chatRoutes = require('./routes/chat');
 const genAPIRoutes = require('./routes/genAPI');
 
+
 mongoose.connect(mongoString);
 const database = mongoose.connection;
 
@@ -22,6 +23,8 @@ database.once('connected', () => {
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded());
+
 app.use('/user', userRoutes);
 app.use('/message', messageRoutes);
 app.use('/chat', chatRoutes);
