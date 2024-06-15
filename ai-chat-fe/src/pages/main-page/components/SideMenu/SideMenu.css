@@ -1,0 +1,59 @@
+.container {
+    max-height: 50vh;
+    margin-top: 32px;
+    box-sizing: border-box;
+    overflow-y: auto; 
+    border-radius: 8px;
+    background-color: #0008070f;
+  }
+  
+  .side-header {
+    margin: 0 0 12px 0;
+  }
+  
+  .chatList {
+    list-style-type: none;
+    padding: 0;
+    margin: 8px;
+  }
+  
+  .chatItem {
+    padding: 8px;
+  }
+
+  .chatItem:hover{
+    background-color: #0008072e;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .chatItem-current {
+    border: solid 1px;
+  }
+  
+  .addChatContainer {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  .input {
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+  
+  .button {
+    padding: 12px;
+    border-radius: 8px;
+    border: solid 1px;
+    background-color: transparent;
+    color: #000807;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #0008072e;
+  }
