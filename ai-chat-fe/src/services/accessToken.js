@@ -9,10 +9,13 @@ export const getAccessToken = () => {
     return null; 
 };
 
-export const getUserId = () => {
+export const getUser = () => {
     let jwt = getAccessToken()
-    let jwtData = jwt.split('.')[1]
-    let decodedJwtJsonData = window.atob(jwtData)
-    let decodedJwtData = JSON.parse(decodedJwtJsonData)
-    return decodedJwtData.UserInfo.id
+    if(jwt){
+        let jwtData = jwt.split('.')[1]
+        let decodedJwtJsonData = window.atob(jwtData)
+        let decodedJwtData = JSON.parse(decodedJwtJsonData)
+        return decodedJwtData.UserInfo
+    }
+    
 }

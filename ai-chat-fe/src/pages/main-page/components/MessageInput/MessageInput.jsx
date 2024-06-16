@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import './MessageInput.css';
 
-const MessageInput = () => {
+const MessageInput = ({ onSendMessage }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e) => {
@@ -19,7 +19,7 @@ const MessageInput = () => {
 
   const handleSendMessage = () => {
     if (inputValue.trim()) {
-      console.log('Message sent:', inputValue.trim());
+      onSendMessage(inputValue.trim())
       setInputValue('');
     }
   };

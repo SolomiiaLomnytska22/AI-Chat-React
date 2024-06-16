@@ -1,37 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import './MainPage.css';
 import MessageInput from './components/MessageInput/MessageInput';
 import MessageArea from './components/MessageArea/MessageArea';
-import SideMenu from './components/SideMenu/SideMenu'
+import SideMenu from './components/SideMenu/SideMenu';
+import { ChatContext } from '../../context/ContextProvider'; 
+import { getUser } from '../../services/accessToken';
+import { getAllChats, addChat } from '../../services/chat';
+import { getMessagesByChatId, addMessage } from '../../services/message';
 
-const messages = [
-    {
-      _id: '1',
-      user: '123',
-      chat: '456',
-      text: 'Hello!',
-      role: 'user',
-      createdAt: '2024-06-12T10:00:00Z',
-    },
-    {
-      _id: '2',
-      user: '123',
-      chat: '456',
-      text: 'How can I help you? Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      role: 'tool',
-      createdAt: '2024-06-12T10:01:00Z',
-    }
-  ];
-
-  const initialChats = ['Chat 1', 'Chat 2', 'Chat 3'];
-  
 function MainPage() {
-  const [chats, setChats] = useState(initialChats);
+  const [chats, setChats] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [sideMenuVisible, setSideMenuVisible] = useState(true);
+  const { userData, setChatData, chatData } = useContext(ChatContext);
+  const { setUserData } = useContext(ChatContext);
+  const navigate = useNavigate();
 
-  const addNewChat = (e) => {
-    if (e.trim()) {
-      setChats([...chats, e]);
+  useEffect(() => {
+    const userData = getUser();
+    if (userData) {
+      setUserData(userData);
+    }
+    else {
+      navigate('/login');
+    }
+  
+    const fetchChats = async () => {
+      const allChats = await getAllChats();
+      if (allChats) {
+        setChats(allChats);
+      }
+    };
+
+    fetchChats();
+  }, [navigate, setUserData]);
+
+  const addNewChat = async (chatName) => {
+    if (chatName.trim()) {
+      const success = await addChat(chatName);
+      if (success) {
+        const allChats = await getAllChats();
+        if (allChats) {
+          setChats(allChats);
+        }
+        selectChat(success.data)
+      }
+    }
+  };
+
+  const selectChat = async (chat) => {
+    setChatData({ currentChat: chat._id });
+    const chatMessages = await getMessagesByChatId(chat._id);
+    if (chatMessages) {
+      setMessages(chatMessages);
+    }
+  };
+
+  const handleSendMessage = async (text) => {
+    const currentChat = chatData.currentChat;
+    if (text.trim() && currentChat) {
+      const messageData = { chat: currentChat, text };
+      const success = await addMessage(messageData);
+      if (success) {
+        const updatedMessages = await getMessagesByChatId(currentChat);
+        if (updatedMessages) {
+          setMessages(updatedMessages);
+        }
+      }
     }
   };
 
@@ -41,17 +77,19 @@ function MainPage() {
         <div className='title'>
             <h1>ALPHA AI</h1>
         </div>
-        <div className='photo'></div>
+        <div className='photo'>
+          <img src={userData?.profilePictureUrl || 'https://png.pngtree.com/png-clipart/20191122/original/pngtree-user-icon-isolated-on-abstract-background-png-image_5192004.jpg'} alt="Profile" /> {/* Use user profile picture */}
+        </div>
       </div>
 
       {sideMenuVisible && <div className='side-menu'>
-        <SideMenu chats={chats} handleClick={addNewChat} />
-        </div>}
+        <SideMenu chats={chats} handleClick={addNewChat} onSelectChat={selectChat} />
+      </div>}
       <div className='messages-container'>
         <MessageArea messages={messages} />
       </div>
       <div className='message-input'>
-        <MessageInput />
+        <MessageInput onSendMessage={handleSendMessage} />
       </div>
     </div>
   );
