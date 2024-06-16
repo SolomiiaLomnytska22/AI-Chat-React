@@ -22,7 +22,9 @@ router.post('/new-chat', async (req, res) => {
     res.send('New chat is created!')
 })
 
-router.get('/is-active', async (req, res) => {
-   return activeChats.find((act_chat) => act_chat.id==req.body.chat) ? true : false
+router.post('/is-active', async (req, res) => {
+    console.log(req.body)
+    const response = activeChats.find((act_chat) => act_chat.id==req.body.chat)
+    return response ? res.send(true) : res.send(false) 
 })
 module.exports = router;

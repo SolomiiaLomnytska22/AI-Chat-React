@@ -1,0 +1,47 @@
+.inactive-text-input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    background-color: #fbf9ff9a;
+    border-radius: 12px;
+  }
+  
+  .inactive-text-input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    resize: none;
+    outline: none;
+    box-shadow: none;
+    color: #000807;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    overflow-y: scroll;
+  }
+
+  .inactive-text-input::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .inactive-send-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    background-color: #838383;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .inactive-send-button:hover {
+    cursor: not-allowed;
+    background-color: #838383;
+  }

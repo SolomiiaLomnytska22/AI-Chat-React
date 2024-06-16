@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
 .warning{
     width: 100%;
     display: flex;
@@ -5,4 +7,9 @@
     background-color: #0008072e;
     padding: 12px 0px;
     color: #FBF9FF;
+}
+
+.message-h2 {
+    color: #FBF9FF;
+    font-family: "Zen Dots", sans-serif;
 }
