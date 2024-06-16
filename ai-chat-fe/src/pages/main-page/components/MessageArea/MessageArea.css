@@ -44,3 +44,44 @@
     padding: 2px 4px;
     border-radius: 4px;
   }
+
+
+.initial-blocks {
+  margin: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px; 
+}
+
+.initial-block {
+  background-color: #f1f1f12e; 
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1 1 calc(33.333% - 20px); /* 3 blocks per row with spacing */
+  text-align: center;
+  transition: background-color 0.3s ease;
+  color: #e0e0e0;
+  border: solid 1px;
+}
+
+.initial-block:hover {
+  background-color: transparent; /* Hover effect */
+}
+
+/* Responsive styles */
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  .initial-block {
+    flex: 1 1 calc(50% - 20px); /* 2 blocks per row with spacing */
+  }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 480px) {
+  .initial-block {
+    flex: 1 1 calc(100% - 20px); /* 1 block per row with spacing */
+  }
+}

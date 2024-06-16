@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import "./MessageArea.css";
 import ReactMarkdown from "react-markdown";
 import { ChatContext } from '../../../../context/ContextProvider' 
+import { getUser } from "../../../../services/accessToken";
 
 
 const chat = [
@@ -40,13 +41,18 @@ const MessageArea = (props) => {
   return (
     <>
       {(!chatData || !chatData?.currentChat) && (
-        <div className="initial-blocks">
+        <div>
+          <h1 className="header" style={{color: 'white'}}>Hey, {getUser()?.name}!</h1> 
+          <h3 className="header" style={{color: 'white'}}>How can I help you today?</h3>
+          <div className="initial-blocks">
           {chat.map((item, index) => (
             <div key={index} className="initial-block" onClick={async () => await handleCreateDefaultChat(item)}>
               {item.name}
             </div>
           ))}
         </div>
+        </div>
+        
       )}
       <div className="message-list">
         {props.messages.map((message) => (
