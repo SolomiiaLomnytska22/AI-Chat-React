@@ -1,8 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './MessageArea.css';
+import ReactMarkdown from 'react-markdown';
 
 const MessageArea = ({ messages }) => {
+  const formatDateTime = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const options = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      hour: '2-digit', 
+      minute: '2-digit'
+    };
+    return date.toLocaleString('en-US', options);
+  }
+
   return (
     <div className="message-list">
       {messages.map((message) => (
@@ -10,24 +22,12 @@ const MessageArea = ({ messages }) => {
           key={message._id} 
           className={`message ${message.role}`}
         >
-          <p>{message.text}</p>
+          <ReactMarkdown>{message.text}</ReactMarkdown>
+          <div className="message-date">{formatDateTime(message.createdAt)}</div>
         </div>
       ))}
     </div>
   );
-};
-
-MessageArea.propTypes = {
-  messages: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      user: PropTypes.string.isRequired,
-      chat: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      role: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default MessageArea;

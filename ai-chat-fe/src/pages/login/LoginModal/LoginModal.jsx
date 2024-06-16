@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
+import { React, useState, useContext } from 'react';
 import './LoginModal.css';
 import { completeLogin } from '../../../services/login';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import { ChatContext } from '../../../context/ContextProvider';
+import { getUser } from '../../../services/accessToken'; 
 
 const LoginModal = () => {
-  const [login, setlogin] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { setUserData } = useContext(ChatContext);
   
   const handleLogin = async (e) => {
     e.preventDefault();
-    try{
-        await completeLogin(login, password);
-        navigate('/chat')
-    } catch (err){
-        console.log(err)
-        toast.error('❌' + err.message, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light"
-        });
+    try {
+      await completeLogin(login, password);
+      const userData = getUser();
+      if(userData){
+        setUserData(userData);
+        navigate('/chat');
+      }
+      else throw Error('The user is not found!')
+    } catch (err) {
+      console.log(err);
+      toast.error('❌' + err.message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        theme: "light"
+      });
     }
-    
   };
 
   return (
@@ -41,7 +46,7 @@ const LoginModal = () => {
             id="login"
             className="input"
             value={login}
-            onChange={(e) => setlogin(e.target.value)}
+            onChange={(e) => setLogin(e.target.value)}
             required
           />
         </div>

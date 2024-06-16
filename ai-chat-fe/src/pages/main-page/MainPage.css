@@ -43,10 +43,15 @@ body{
   .photo {
     grid-area: photo;
     justify-self: end;
-    width: 64px; /* Adjust size as needed */
-    height: 64px; /* Adjust size as needed */
+    width: 64px; 
+    height: 64px; 
     border-radius: 100%;
-    background: url('https://media.licdn.com/dms/image/D4D03AQFsJ552n6uLcw/profile-displayphoto-shrink_800_800/0/1699371103989?e=1723680000&v=beta&t=U7rNgIpq-6jqdp6liCvdPy9ayxh4whTfC7OKkFg1xSs') no-repeat center/cover;
+    overflow: hidden;
+    img {
+      width: 64px; 
+      height: 64px; 
+      object-fit:cover;
+    }
   }
   
   .side-menu {

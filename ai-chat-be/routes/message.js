@@ -38,6 +38,18 @@ router.get('/:id',  async (req, res) => {
     }
 })
 
+//Get by Chat ID Method
+router.get('/chat-id/:id',  async (req, res) => {
+    try {
+        const { id } = req.params;
+        const message = await Message.find({chat: id});
+        return res.status(200).json(message);
+    } catch (err) {
+        console.log(err)
+        return res.status(400).json(err);
+    }
+})
+
 //Update by ID Method
 router.put("/:id", async (req, res) => {
     try {

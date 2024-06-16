@@ -1,17 +1,22 @@
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Routes, Route, } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import MainPage from "./pages/main-page/MainPage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ChatProvider } from './context/ContextProvider'
 
 function App() {
+
   return (
     <div className="App">
-      <Routes>
-        <Route path="login" element={ <LoginPage/> } />
-        <Route path="chat" element={ <MainPage/> } />
-      </Routes>
-      <ToastContainer />
+      <ChatProvider>
+        <Routes>
+          <Route path="login" element={ <LoginPage/> } />
+          <Route path="chat" element={ <MainPage/> } />
+        </Routes>
+        <ToastContainer />
+      </ChatProvider>
     </div>
   );
 }
