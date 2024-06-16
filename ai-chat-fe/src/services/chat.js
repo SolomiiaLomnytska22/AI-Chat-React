@@ -3,6 +3,19 @@ import { getAccessToken, getUser } from './accessToken';
 
 const API_URL = 'http://localhost:3001/chat';
 
+export const isActive = async (chat_id) => {
+    try {
+        const token = getAccessToken();
+        const response = await axios.post(`http://localhost:3001/gen/is-active`, {chat: chat_id}, {headers: {
+            Authorization: `Bearer ${token}` 
+        }});
+        return response.data;
+    } catch (error) {
+        console.log(`Error fetching chat with id ${chat_id}: `, error);
+        return false;
+    }
+}
+
 export const getChatById = async (id) => {
     try {
         const token = getAccessToken();

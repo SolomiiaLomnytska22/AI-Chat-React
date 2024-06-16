@@ -11,7 +11,7 @@ const LoginPage = () => {
         <div className='title' style={{margin:'0'}}>
             <h1>ALPHA AI</h1>
         </div>
-        <h2 style={{color:'white'}}>Begin your jorney with our AI chat!</h2>
+        <h2 class='message-h2'>Begin your jorney with our AI chat!</h2>
         </div>
       <LoginModal />
       <div className="warning">Alpha AI may display inaccurate info, including about people, so double-check its responses. </div>

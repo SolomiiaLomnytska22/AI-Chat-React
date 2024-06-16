@@ -31,3 +31,16 @@
     font-size: 14px;
     padding: 8px 0;
   }
+
+
+  .message pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+  }
+  
+  .message code {
+    background-color: #e6e6e62e; 
+    padding: 2px 4px;
+    border-radius: 4px;
+  }

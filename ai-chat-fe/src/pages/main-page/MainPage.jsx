@@ -8,13 +8,15 @@ import { ChatContext } from '../../context/ContextProvider';
 import { getUser } from '../../services/accessToken';
 import { getAllChats, addChat } from '../../services/chat';
 import { getMessagesByChatId, addMessage } from '../../services/message';
+import InactiveInput from './components/InactiveInput/MessageInput';
+import { isActive } from '../../services/chat';
 
 function MainPage() {
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [sideMenuVisible, setSideMenuVisible] = useState(true);
-  const { userData, setChatData, chatData } = useContext(ChatContext);
-  const { setUserData } = useContext(ChatContext);
+  const [isActiveStatus, setIsActiveStatus] = useState(false);
+  const { userData, setChatData, chatData, setUserData } = useContext(ChatContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,21 +46,42 @@ function MainPage() {
         if (allChats) {
           setChats(allChats);
         }
-        selectChat(success.data)
+        await selectChat(success.data);
+        return success.data._id;
+      }
+    }
+  };
+
+  const sendDefaultMessage = async (id, text) => {
+    console.log(id)
+    if (text.trim() && id) {
+      const messageData = { chat: id, text };
+      const success = await addMessage(messageData);
+      if (success) {
+        const updatedMessages = await getMessagesByChatId(id);
+        if (updatedMessages) {
+          setMessages(updatedMessages);
+        }
       }
     }
   };
 
   const selectChat = async (chat) => {
+    console.log('select chat')
     setChatData({ currentChat: chat._id });
+    console.log(chatData)
     const chatMessages = await getMessagesByChatId(chat._id);
     if (chatMessages) {
       setMessages(chatMessages);
     }
+    const isActiveStatus = await isActive(chat._id);
+    console.log(isActiveStatus)
+    setIsActiveStatus(isActiveStatus);
   };
 
   const handleSendMessage = async (text) => {
-    const currentChat = chatData.currentChat;
+    console.log('send message')
+    const currentChat = chatData?.currentChat;
     if (text.trim() && currentChat) {
       const messageData = { chat: currentChat, text };
       const success = await addMessage(messageData);
@@ -86,10 +109,15 @@ function MainPage() {
         <SideMenu chats={chats} handleClick={addNewChat} onSelectChat={selectChat} />
       </div>}
       <div className='messages-container'>
-        <MessageArea messages={messages} />
+        <MessageArea messages={messages} onSendMessage={sendDefaultMessage} onAddChat={addNewChat} />
       </div>
       <div className='message-input'>
-        <MessageInput onSendMessage={handleSendMessage} />
+        {isActiveStatus &&
+            <MessageInput onSendMessage={handleSendMessage} />
+        }
+        {(!isActiveStatus&&chatData?.currentChat) &&
+            <InactiveInput />
+        }
       </div>
     </div>
   );
