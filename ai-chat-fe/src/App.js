@@ -5,6 +5,7 @@ import MainPage from "./pages/main-page/MainPage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ChatProvider } from './context/ContextProvider'
+import LandingPage from './pages/landing/LandingPage';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="login" element={ <LoginPage/> } />
           <Route path="chat" element={ <MainPage/> } />
+          <Route path="" element={ <LandingPage/> } />
         </Routes>
         <ToastContainer />
       </ChatProvider>
