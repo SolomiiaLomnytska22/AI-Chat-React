@@ -42,6 +42,19 @@ export const getAllChats = async () => {
     }
 }
 
+export const getAllChatsByUser = async (id) => {
+    try {
+        const token = getAccessToken();
+        const response = await axios.get(`${API_URL}/user/${id}`, {headers: {
+            Authorization: `Bearer ${token}` 
+        }});
+        return response.data;
+    } catch (error) {
+        console.log(`Error fetching chats: `, error);
+        return false;
+    }
+}
+
 export const addChat = async (name) => {
     try {
         const user_id = getUser().id
