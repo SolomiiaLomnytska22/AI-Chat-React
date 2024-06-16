@@ -1,9 +1,8 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import "./MessageArea.css";
 import ReactMarkdown from "react-markdown";
-import { ChatContext } from '../../../../context/ContextProvider' 
+import { ChatContext } from "../../../../context/ContextProvider";
 import { getUser } from "../../../../services/accessToken";
-
 
 const chat = [
   {
@@ -19,6 +18,7 @@ const chat = [
     message: "Please, write, text inviting friend to wedding",
   },
 ];
+
 const MessageArea = (props) => {
   const { chatData } = useContext(ChatContext);
   const formatDateTime = (dateTimeString) => {
@@ -42,17 +42,16 @@ const MessageArea = (props) => {
     <>
       {(!chatData || !chatData?.currentChat) && (
         <div>
-          <h1 className="header" style={{color: 'white'}}>Hey, {getUser()?.name}!</h1> 
-          <h3 className="header" style={{color: 'white'}}>How can I help you today?</h3>
+          <h1 className="header" style={{ color: 'white' }}>Hey, {getUser()?.name}!</h1>
+          <h3 className="header" style={{ color: 'white' }}>How can I help you today?</h3>
           <div className="initial-blocks">
-          {chat.map((item, index) => (
-            <div key={index} className="initial-block" onClick={async () => await handleCreateDefaultChat(item)}>
-              {item.name}
-            </div>
-          ))}
+            {chat.map((item, index) => (
+              <div key={index} className="initial-block" onClick={async () => await handleCreateDefaultChat(item)}>
+                {item.name}
+              </div>
+            ))}
+          </div>
         </div>
-        </div>
-        
       )}
       <div className="message-list">
         {props.messages.map((message) => (
@@ -61,6 +60,16 @@ const MessageArea = (props) => {
             <div className="message-date">{formatDateTime(message.createdAt)}</div>
           </div>
         ))}
+        {props.isLoading && (
+          <div className="loader">
+          <div className="message user loader-box">
+
+          </div>
+          <div className="message tool loader-box">
+
+          </div>
+        </div>
+        )}
       </div>
     </>
   );
