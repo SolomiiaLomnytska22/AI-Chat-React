@@ -26,6 +26,20 @@ router.get('', async (req, res) => {
    
 })
 
+
+//Get By User ID Method
+router.get('/user/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const allChats = await Chat.find({user: id});
+        return res.status(200).json(allChats);
+    } catch (err) {
+        console.log(err)
+        return res.status(400).json(err);
+    }
+   
+})
+
 //Get by ID Method
 router.get('/:id',  async (req, res) => {
     try {
