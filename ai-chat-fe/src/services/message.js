@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken, getUser } from './accessToken';
+import { getAccessToken } from './accessToken';
 
 const API_URL = 'http://localhost:3001/message';
 

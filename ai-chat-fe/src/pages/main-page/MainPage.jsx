@@ -16,6 +16,7 @@ function MainPage() {
   const [messages, setMessages] = useState([]);
   const [sideMenuVisible, setSideMenuVisible] = useState(true);
   const [isActiveStatus, setIsActiveStatus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { userData, setChatData, chatData, setUserData } = useContext(ChatContext);
   const navigate = useNavigate();
 
@@ -23,11 +24,10 @@ function MainPage() {
     const userData = getUser();
     if (userData) {
       setUserData(userData);
-    }
-    else {
+    } else {
       navigate('/login');
     }
-  
+
     const fetchChats = async () => {
       const allChats = await getAllChats();
       if (allChats) {
@@ -53,9 +53,9 @@ function MainPage() {
   };
 
   const sendDefaultMessage = async (id, text) => {
-    console.log(id)
     if (text.trim() && id) {
       const messageData = { chat: id, text };
+      setIsLoading(true);
       const success = await addMessage(messageData);
       if (success) {
         const updatedMessages = await getMessagesByChatId(id);
@@ -63,27 +63,25 @@ function MainPage() {
           setMessages(updatedMessages);
         }
       }
+      setIsLoading(false);
     }
   };
 
   const selectChat = async (chat) => {
-    console.log('select chat')
     setChatData({ currentChat: chat._id });
-    console.log(chatData)
     const chatMessages = await getMessagesByChatId(chat._id);
     if (chatMessages) {
       setMessages(chatMessages);
     }
     const isActiveStatus = await isActive(chat._id);
-    console.log(isActiveStatus)
     setIsActiveStatus(isActiveStatus);
   };
 
   const handleSendMessage = async (text) => {
-    console.log('send message')
     const currentChat = chatData?.currentChat;
     if (text.trim() && currentChat) {
       const messageData = { chat: currentChat, text };
+      setIsLoading(true);
       const success = await addMessage(messageData);
       if (success) {
         const updatedMessages = await getMessagesByChatId(currentChat);
@@ -91,17 +89,18 @@ function MainPage() {
           setMessages(updatedMessages);
         }
       }
+      setIsLoading(false);
     }
   };
 
   return (
     <div className={`main-page ${sideMenuVisible ? 'with-side-menu' : 'without-side-menu'}`}>
-      <div className='header'> 
+      <div className='header'>
         <div className='title'>
-            <h1>ALPHA AI</h1>
+          <h1>ALPHA AI</h1>
         </div>
         <div className='photo'>
-          <img src={userData?.profilePictureUrl || 'https://png.pngtree.com/png-clipart/20191122/original/pngtree-user-icon-isolated-on-abstract-background-png-image_5192004.jpg'} alt="Profile" /> {/* Use user profile picture */}
+          <img src={userData?.profilePictureUrl || 'https://png.pngtree.com/png-clipart/20191122/original/pngtree-user-icon-isolated-on-abstract-background-png-image_5192004.jpg'} alt="Profile" />
         </div>
       </div>
 
@@ -109,14 +108,14 @@ function MainPage() {
         <SideMenu chats={chats} handleClick={addNewChat} onSelectChat={selectChat} />
       </div>}
       <div className='messages-container'>
-        <MessageArea messages={messages} onSendMessage={sendDefaultMessage} onAddChat={addNewChat} />
+        <MessageArea messages={messages} onSendMessage={sendDefaultMessage} onAddChat={addNewChat} isLoading={isLoading} />
       </div>
       <div className='message-input'>
         {isActiveStatus &&
-            <MessageInput onSendMessage={handleSendMessage} />
+          <MessageInput onSendMessage={handleSendMessage} />
         }
-        {(!isActiveStatus&&chatData?.currentChat) &&
-            <InactiveInput />
+        {(!isActiveStatus && chatData?.currentChat) &&
+          <InactiveInput />
         }
       </div>
     </div>
