@@ -10,12 +10,19 @@ export const getAccessToken = () => {
 };
 
 export const getUser = () => {
-    let jwt = getAccessToken()
-    if(jwt){
-        let jwtData = jwt.split('.')[1]
-        let decodedJwtJsonData = window.atob(jwtData)
-        let decodedJwtData = JSON.parse(decodedJwtJsonData)
-        return decodedJwtData.UserInfo
+    let jwt = getAccessToken();
+    if (jwt) {
+        let jwtParts = jwt.split('.');
+        if (jwtParts.length >= 2) {
+            let jwtData = jwtParts[1];
+            try {
+                let decodedJwtJsonData = window.atob(jwtData);
+                let decodedJwtData = JSON.parse(decodedJwtJsonData);
+                return decodedJwtData.UserInfo;
+            } catch (e) {
+                console.error('Error decoding JWT:', e);
+            }
+        }
     }
-    
+    return null;
 }

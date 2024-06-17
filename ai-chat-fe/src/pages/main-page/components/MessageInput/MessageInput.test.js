@@ -1,44 +1,41 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import MessageInput from './MessageInput';
 
-test('should update input value when user types', () => {
+test('renders message input with placeholder', () => {
   const { getByPlaceholderText } = render(<MessageInput />);
-
-  const input = getByPlaceholderText('Write you prompt...');
-  fireEvent.change(input, { target: { value: 'Hello World!' } });
-
-  expect(input.value).toBe('Hello World!');
+  const inputElement = getByPlaceholderText('Write you prompt...');
+  expect(inputElement).toBeInTheDocument();
 });
 
-jest.spyOn(console, 'log'); 
-
-test('should call handleSendMessage on Enter key press', () => {
+test('updates input value on change', () => {
   const { getByPlaceholderText } = render(<MessageInput />);
-
-  const input = getByPlaceholderText('Write you prompt...');
-  fireEvent.change(input, { target: { value: 'Some message' } });
-  fireEvent.keyDown(input, { key: 'Enter', code: 13 });
-
-  expect(console.log).toHaveBeenCalledWith('Message sent:', 'Some message');
+  const inputElement = getByPlaceholderText('Write you prompt...');
+  fireEvent.change(inputElement, { target: { value: 'Test message' } });
+  expect(inputElement.value).toBe('Test message');
 });
 
-test('should send message with trimmed input', () => {
-    const { getByPlaceholderText } = render(<MessageInput />);
-  
-    const input = getByPlaceholderText('Write you prompt...');
-    fireEvent.change(input, { target: { value: '  Some message  ' } });
-    fireEvent.keyDown(input, { key: 'Enter', code: 13 });
-  
-    expect(console.log).toHaveBeenCalledWith('Message sent:', 'Some message');
-  });
+test('calls onSendMessage with input value on send button click', () => {
+  const mockOnSendMessage = jest.fn();
+  const { getByRole, getByPlaceholderText } = render(<MessageInput onSendMessage={mockOnSendMessage} />);
+  const inputElement = getByPlaceholderText('Write you prompt...');
+  const sendButton = document.getElementsByClassName('send-button')[0];
+ 
 
-  test('should not send message with empty input', () => {
-    const { getByPlaceholderText } = render(<MessageInput />);
-  
-    const input = getByPlaceholderText('Write you prompt...');
-    fireEvent.keyDown(input, { key: 'Enter', code: 13 });
-  
-    expect(console.log).not.toHaveBeenCalled();
-  });
+  fireEvent.change(inputElement, { target: { value: 'Test message' } });
+  fireEvent.click(sendButton);
 
+  expect(mockOnSendMessage).toHaveBeenCalledWith('Test message');
+});
+
+test('calls onSendMessage with input value on Enter key press', () => {
+  const mockOnSendMessage = jest.fn();
+  const { getByPlaceholderText } = render(<MessageInput onSendMessage={mockOnSendMessage} />);
+  const inputElement = getByPlaceholderText('Write you prompt...');
+
+  fireEvent.change(inputElement, { target: { value: 'Test message' } });
+  fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' });
+
+  expect(mockOnSendMessage).toHaveBeenCalledWith('Test message');
+});

@@ -62,12 +62,8 @@ const MessageArea = (props) => {
         ))}
         {props.isLoading && (
           <div className="loader">
-          <div className="message user loader-box">
-
-          </div>
-          <div className="message tool loader-box">
-
-          </div>
+          <div className="message user loader-box"></div>
+          <div className="message tool loader-box"></div>
         </div>
         )}
       </div>

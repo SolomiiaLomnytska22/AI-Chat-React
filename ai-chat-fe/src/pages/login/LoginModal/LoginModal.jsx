@@ -1,4 +1,4 @@
-import { React, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './LoginModal.css';
 import { completeLogin } from '../../../services/login';
 import { toast } from 'react-toastify';
