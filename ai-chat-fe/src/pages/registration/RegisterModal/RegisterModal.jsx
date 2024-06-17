@@ -103,7 +103,6 @@ const LoginModal = () => {
             value={profilePictureUrl}
             className="input"
             onChange={(e) => setProfilePic(e.target.value)}
-            required
           />
           <img src={profilePictureUrl} alt="" />
         </div>

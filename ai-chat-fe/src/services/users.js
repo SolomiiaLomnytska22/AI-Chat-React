@@ -17,12 +17,8 @@ export const getUserById = async (id) => {
 }
 
 export const addUser = async (data) => {
-
     try {
-        const token = getAccessToken();
-        await axios.post(API_URL, data, { headers: {
-            Authorization: `Bearer ${token}` 
-        }});
+        await axios.post(API_URL, data);
       return true; 
     } catch (error) {
         console.log(error);
