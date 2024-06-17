@@ -34,7 +34,9 @@ const handleLogin = async (req, res) => {
             );
 
             // Update refreshToken in the database
-            await User.updateOne({ _id: foundUser._id }, { RefreshToken: refreshToken });
+            await User.updateOne({ _id: foundUser._id }, {$set:{refreshToken: refreshToken}});
+
+
 
             res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
             res.json({ accessToken });

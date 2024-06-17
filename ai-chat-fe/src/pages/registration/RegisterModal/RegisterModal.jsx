@@ -28,7 +28,9 @@ const LoginModal = () => {
         }
         else throw Error('Unable to create account!')
       }
+
       else throw Error('Your password does not match the one you retyped! Password: ' + password +' Retyped: ' + password_retype)
+
       
     } catch (err) {
       console.log(err);
@@ -86,6 +88,7 @@ const LoginModal = () => {
           <input
             type="password"
             id="password-re"
+
             value={password_retype}
             className="input"
             onChange={(e) => setPasswordRe(e.target.value)}

@@ -6,7 +6,7 @@ import MessageArea from './components/MessageArea/MessageArea';
 import SideMenu from './components/SideMenu/SideMenu';
 import { ChatContext } from '../../context/ContextProvider'; 
 import { getUser } from '../../services/accessToken';
-import { getAllChats, addChat } from '../../services/chat';
+import { getAllChats, addChat, getAllChatsByUser } from '../../services/chat';
 import { getMessagesByChatId, addMessage } from '../../services/message';
 import InactiveInput from './components/InactiveInput/MessageInput';
 import { isActive } from '../../services/chat';
@@ -29,7 +29,8 @@ function MainPage() {
     }
 
     const fetchChats = async () => {
-      const allChats = await getAllChats();
+      console.log('fetchChats')
+      const allChats = await getAllChatsByUser(userData?.id);
       if (allChats) {
         setChats(allChats);
       }
@@ -42,7 +43,7 @@ function MainPage() {
     if (chatName.trim()) {
       const success = await addChat(chatName);
       if (success) {
-        const allChats = await getAllChats();
+        const allChats = await getAllChatsByUser(userData?.id);
         if (allChats) {
           setChats(allChats);
         }

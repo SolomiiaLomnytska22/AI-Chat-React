@@ -18,6 +18,10 @@
   .form-group {
     margin-bottom: 15px;
   }
+
+  .form-group img{
+    max-width: 100%;
+  }
   
   label {
     display: block;
@@ -43,11 +47,3 @@
     background-color: #fbf9ff19;
   }
   
-  .register-btn{
-    text-decoration: underline;
-    cursor: pointer;
-    text-align: center;
-    font-size: 16px;
-  }
-
-

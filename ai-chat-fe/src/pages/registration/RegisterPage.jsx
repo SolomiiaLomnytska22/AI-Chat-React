@@ -1,7 +1,7 @@
 import React from 'react';
 
-import LoginModal from './LoginModal/LoginModal';
-import './LoginPage.css';
+import LoginModal from './RegisterModal/RegisterModal';
+import './RegisterPage.css';
 
 const LoginPage = () => {
 

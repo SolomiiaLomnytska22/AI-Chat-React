@@ -62,6 +62,7 @@ const LoginModal = () => {
           />
         </div>
         <button type="submit">Login</button>
+        <p className="register-btn" onClick={() => navigate('/register')}>Don't have account? Register</p>
       </form>
     </div>
   );
